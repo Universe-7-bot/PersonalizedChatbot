@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chatbot</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+
+<body id="body">
+    <div id="particles-js" class="main-div d-flex align-items-center justify-content-center">
+        <div class="chatbox shadow" data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="2000">
+            <div class="user d-flex align-items-center justify-content-between">
+                <p class="heading">Welcome to NexusAI</p>
+                <p class="user-heading"><img class="user-icon" src="images/user.png" alt="user">Hi! user</p>
+            </div>
+            <div id="chat-msg" class="chat-msg"></div>
+            <div class="chat-msg-input d-flex justify-content-between">
+                <input id="chat-message-input" class="input" type="text" placeholder="Write your message...">
+                <img onclick="send()" class="send-icon" src="images/sendicon.png" alt="send">
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById("body").addEventListener("keydown", function (e) {
+            if (e.code == "Enter") {
+                send();
+                document.getElementById("chat-message-input").value = "";
+            }
+        })
+
+        function send() {
+            var date = new Date();
+            var time = date.getHours() + ":" + date.getMinutes();
+            let question = document.getElementById("chat-message-input").value;
+            document.getElementById("chat-message-input").value = "";
+            if (question == "") {
+                return;
+            }
+            document.getElementById("chat-msg").innerHTML += `<div class="chat-q">
+                <div class="chat-user d-flex justify-content-between">
+                    <div class="d-flex flex-row">
+                        <img class="chat-user-icon" src="images/user1.png" alt="user">
+                        <p class="chat-user-text">You</p>
+                    </div>
+                    <p style="font-weight: 500; color: rgb(161, 161, 161); margin-top: 0.2rem; margin-right: 0.4rem">${time}</p>
+                </div>
+                <div class="chat-question">
+                    <p class="qn">${question}</p>
+                </div>
+            </div>`;
+
+            var chatContainer = document.getElementById("chat-msg");
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+
+            fetch("/question", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ question }) }).then((res) => {
+                return res.json();
+            }).then((f_res) => {
+                // console.log(f_res);
+                const responseDiv = document.createElement("div");
+                responseDiv.classList.add("chat-a");
+                responseDiv.innerHTML = `
+                    <div class="chat-bot d-flex justify-content-between">
+                        <div class="d-flex flex-row">
+                            <img class="chat-bot-icon" src="images/bot1.png" alt="bot">
+                            <p class="chat-bot-text">Bot</p>
+                        </div>
+                        <p style="font-weight: 500; color: rgb(161, 161, 161); margin-top: 0.2rem; margin-right: 0.4rem">${time}</p>
+                    </div>
+                    <div class="chat-answer">
+                            <img id="preloader" class="preloader" src="images/preloader.gif" alt="preloader">
+                    </div>`;
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+                document.getElementById("chat-msg").appendChild(responseDiv);
+                setTimeout(() => {
+                    const preloader = responseDiv.querySelector("#preloader");
+                    preloader.remove();
+                    const chatAnswer = responseDiv.querySelector(".chat-answer");
+                    chatAnswer.innerHTML += `<p id="ans" class="ans">${f_res.msg}</p>`;
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                }, 2000);
+
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            })
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://threejs.org/examples/js/libs/stats.min.js"></script>
+    <!-- <script src="tsParticles.js"></script> -->
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

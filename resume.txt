@@ -1,0 +1,25 @@
+Resume
+1.Name : Sohan Singhamahapatra
+Contact no : 629654644 
+2.Email : sohansinghamahapatra02103@gmail.com
+3.Education : 1. JADAVPUR UNIVERSITY(B.E. in Information Technology)
+2. BANKURA CHRISTIAN COLLEGIATE SCHOOL(Xth Percentage : 95 and XIIth Percentage : 91.2)
+4.Courseworks :
+Data Structure Algorithms
+Object Oriented Programming
+Database Management System
+5.Skills :
+1. PROGRAMMING (C, C++, Java (basic))
+2. FRONT-END DEVELOPMENT (HTML, CSS, Javascript, React)
+Projects : 
+1. ANIMATED WEBSITE
+2. TODOZ
+3. LIVE SEARCH FILTER
+6. Achievements :
+1. Technophilia Hackathon (Jan 2022)
+Secured 5th position among 400+ participating teams(conducted by
+JUSC).
+2. Among top 150 out of 4000 participants in Tally Code Brewers 2022.
+3. Selected in Jumpstart (by Publicis Sapient) 2022.
+4. Secured 5th position in Pass The Baton coding competition organized in Srijan tech fest 2022, Jadavpur University.
+5.  Qualified for final round in Sherlocked coding event organized in Srijan tech fest 2022, Jadavpur University.
